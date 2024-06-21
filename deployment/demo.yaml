@@ -1,0 +1,101 @@
+name: "demo_workflow"
+description: |
+  "This is a sample workflow"
+
+tags:
+  env: dev
+  department: finance
+  function: etl
+
+base_directory: /demo/
+
+tasks:
+  - task_key: task_1
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_1
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+  
+  - task_key: task_2
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_2
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+  - task_key: task_3
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_3
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+  - task_key: task_4
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_4
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+  - task_key: task_5
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_5
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+  - task_key: task_6
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_6
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+  - task_key: task_7
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_7
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+  - task_key: task_8
+    type: notebook_task
+    notebook_task:
+      notebook_path: task_8
+      source: WORKSPACE
+    job_cluster_key: demo_cluster
+
+job_clusters:
+  - job_cluster_key: demo_cluster
+    new_cluster:
+      num_workers: 0
+      spark_version: "14.3.x-scala2.12"
+      spark_conf:
+        spark.master: "local[*, 4]"
+        spark.databricks.cluster.profile: "singleNode"
+      azure_attributes:
+        first_on_demand: 1
+        availability: "ON_DEMAND_AZURE"
+        spot_bid_max_price: -1
+      node_type_id: "Standard_DS3_v2"
+      driver_node_type_id: "Standard_DS3_v2"
+      ssh_public_keys: []
+      custom_tags:
+        ResourceClass: "SingleNode"
+      spark_env_vars: {}
+      enable_elastic_disk: true
+      init_scripts: []
+      data_security_mode: "LEGACY_SINGLE_USER_STANDARD"
+      runtime_engine: "STANDARD"
+
+
+lineage:
+  - "task_1 >> [task_2, task_3] >> task_8"
+  - "[task_4, task_5] >> task_6 >> task_8"
+  - "task_7 >> task_8"
+
+
+run_as:
+  # Please update your user_name accordingly
+  user_name: user@databricks.com
